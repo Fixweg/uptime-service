@@ -1,8 +1,12 @@
 CREATE TABLE monitor (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    target VARCHAR(255) NOT NULL,
     url VARCHAR(2048) NOT NULL,
-    check_interval_seconds INT NOT NULL DEFAULT 60,
+    interval_seconds INT NOT NULL DEFAULT 60,
+    timeout_ms INT NOT NULL,
+    failure_threshold INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
