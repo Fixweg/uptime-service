@@ -3,7 +3,6 @@ CREATE TABLE monitor (
     name VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
     target VARCHAR(255) NOT NULL,
-    url VARCHAR(2048) NOT NULL,
     interval_seconds INT NOT NULL DEFAULT 60,
     timeout_ms INT NOT NULL,
     failure_threshold INT NOT NULL,
