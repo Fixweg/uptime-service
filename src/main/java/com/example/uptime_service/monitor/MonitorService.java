@@ -2,10 +2,10 @@ package com.example.uptime_service.monitor;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
+
+import com.example.uptime_service.common.ResourceNotFoundException;
 
 @Service
 public class MonitorService {
@@ -24,8 +24,7 @@ public class MonitorService {
     @Transactional(readOnly = true)
     public Monitor get(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Monitor " + id + " nicht gefunden"));
+                .orElseThrow(() -> new ResourceNotFoundException("Monitor", id));
     }
 
     @Transactional
