@@ -1,8 +1,11 @@
 package com.example.uptime_service.monitor;
 
-import jakarta.validation.Valid;
+import java.net.URI;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +17,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
-import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/monitors")
@@ -32,6 +39,12 @@ public class MonitorController {
         return service.findAll().stream().map(MonitorResponse::from).toList();
     }
 
+    @Operation(summary = "Monitor anhand der ID laden")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Gefunden"),
+        @ApiResponse(responseCode = "404", description = "Nicht gefunden",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @GetMapping("/{id}")
     public MonitorResponse get(@PathVariable Long id) {
         return MonitorResponse.from(service.get(id));
